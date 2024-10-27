@@ -107,6 +107,8 @@ class DataManager():
 
         _logs.info(f'Getting stock price data for {ticker} from {start_date} to {end_date}')
         stock_data = yf.download(ticker, start=start_date, end=end_date)
+        if isinstance(stock_data.columns, pd.core.indexes.multi.MultiIndex):
+            stock_data.columns = stock_data.columns.get_level_values('Price')
         return stock_data
 
 
